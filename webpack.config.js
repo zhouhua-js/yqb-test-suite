@@ -23,5 +23,11 @@ module.exports = {
             src: path.resolve(__dirname, 'src')
         }
     },
-    target: 'node'
+    target: 'node',
+    node: {
+        path: false,
+        fs: false,
+        __dirname: false,
+        __filename: false
+    }
 };

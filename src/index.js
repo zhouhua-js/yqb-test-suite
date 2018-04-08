@@ -21,7 +21,6 @@ commander
     .usage('[type]')
     // .option('-t, --type [value]', `项目类型，可以为 vue|react|RN|javascript，默认为javascript`, )
     .option('-m, --packageManager <command>', '使用特定的包管理器，默认优先级 yarn > npm')
-    .option('-f, --force', '如果文件存在时，强制覆盖')
     .on('--help', () => {
         console.log();
         console.log('  Examples:');
