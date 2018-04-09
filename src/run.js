@@ -1,10 +1,12 @@
 import chalk from 'chalk';
 import path from 'path';
+import sh from 'shelljs';
 import { exec } from 'child_process';
 import majo from 'majo';
 import { render } from 'mustache';
 import isBinaryPath from 'is-binary-path';
-// import { logWithSpinner, stopSpinner, succeed } from './util/spinner';
+import writePkg from 'write-pkg';
+import readPkg from 'read-pkg';
 import Spinner from './util/spinner';
 import { DEP } from './constants';
 
@@ -107,7 +109,15 @@ function installDeps(type, pkgManager) {
 }
 
 function addNpmScript() {
-    // logWithSpinner('addNpmScript');
+    return readPkg(process.cwd())
+        .then(data => {
+            const res = { scripts: {}, ...data };
+            res.scripts.test = 'jest --no-cache';
+            return writePkg(process.cwd(), res);
+        })
+        .then(() => {
+            sh.ShellString('\ncoverage\n').toEnd(path.resolve(process.cwd(), '.gitignore'));
+        });
 }
 
 export default async function run(type, pkgManager) {
@@ -126,7 +136,35 @@ export default async function run(type, pkgManager) {
     spinner.success();
     console.log();
 
-    spinner = new Spinner('添加npm命令');
-    addNpmScript();
+    spinner = new Spinner('添加npm命令，修改.gitignore');
+    await addNpmScript();
     spinner.success();
+    console.log();
+
+    console.log();
+    console.log(chalk.greenBright.bold('测试环境配置完成，运行') +
+        chalk.cyan('`npm run test`') +
+        chalk.greenBright.bold('开始单元测试'));
+    console.log(`您可以在 ${chalk.cyan('./coverage/')} 目录下查看覆盖率报告`);
+    console.log();
+    console.log();
+    console.log('还有以下操作需要您手动完成：');
+    console.log();
+    console.log(`${chalk.dim('◻︎ (optional)')} 配置babel`);
+    console.log(`  在.bablerc中添加 ${chalk.cyan.bold('power-assert')} 这个preset，以获得更佳的assert断言支持`);
+    console.log();
+    console.log(`${chalk.dim('◻︎ (optional)')} 配置eslint`);
+    console.log(`  在.eslintrc中添加${chalk.cyan.bold('globals')}字段：`);
+    console.log(chalk`    {cyan "globals"}: \{
+        {cyan "test"}: {magenta true},
+        {cyan "it"}: {magenta true},
+        {cyan "describe"}: {magenta true},
+        {cyan "expect"}: {magenta true},
+        {cyan "assert"}: {magenta true},
+        {cyan "shallow"}: {magenta true},
+        {cyan "mount"}: {magenta true},
+        {cyan "render"}: {magenta true},
+        {cyan "renderToString"}: {magenta true}
+    \}`);
+    console.log();
 }

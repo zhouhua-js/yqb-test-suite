@@ -8,6 +8,17 @@
         "browser": true,
         "node": true
     },
+    "globals": {
+        "test": true,
+        "it": true,
+        "describe": true,
+        "expect": true,
+        "assert": true,
+        "shallow": true,
+        "mount": true,
+        "render": true,
+        "renderToString": true
+    },
     "extends": "airbnb-base",
     "rules": {
         "no-return-assign": [
