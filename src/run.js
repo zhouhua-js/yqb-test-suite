@@ -5,7 +5,7 @@ import copy from 'fancy-copy';
 import { exec } from 'child_process';
 import writePkg from 'write-pkg';
 import readPkg from 'read-pkg';
-import Spinner from './util/spinner';
+import Spinner from 'draft-spinner';
 import { DEP } from './constants';
 
 function checkType(type) {

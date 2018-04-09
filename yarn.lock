@@ -2164,6 +2164,30 @@ domutils@^1.5.1:
     dom-serializer "0"
     domelementtype "1"
 
+draft-spinner@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/draft-spinner/-/draft-spinner-0.1.0.tgz#9e8d052e8f7388d9e30a1fae9ac708897b09c0a6"
+  dependencies:
+    "@babel/cli" "^7.0.0-beta.44"
+    "@babel/core" "^7.0.0-beta.44"
+    "@babel/plugin-proposal-object-rest-spread" "^7.0.0-beta.44"
+    "@babel/preset-env" "^7.0.0-beta.44"
+    babel-core "7.0.0-bridge.0"
+    babel-eslint "^8.2.2"
+    babel-loader "^7.1.4"
+    chalk "^2.3.2"
+    draftlog "^1.0.12"
+    eslint "^4.19.1"
+    eslint-config-airbnb-base "^12.1.0"
+    eslint-friendly-formatter "^4.0.1"
+    eslint-import-resolver-webpack "^0.9.0"
+    eslint-plugin-import "^2.10.0"
+    is-binary-path "^2.0.0"
+    lodash "^4.17.5"
+    log-symbols "^2.2.0"
+    webpack "^4.5.0"
+    webpack-cli "^2.0.14"
+
 draftlog@^1.0.12:
   version "1.0.12"
   resolved "https://registry.yarnpkg.com/draftlog/-/draftlog-1.0.12.tgz#7db6a3c5b62106bb32dd4a35d67bcccb6c7d9da0"

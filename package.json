@@ -37,6 +37,7 @@
     "babel-loader": "^8.0.0-beta.2",
     "chalk": "^2.3.2",
     "commander": "^2.15.1",
+    "draft-spinner": "^0.1.0",
     "draftlog": "^1.0.12",
     "easy-enum.js": "^1.3.2",
     "eslint": "^4.18.2",
