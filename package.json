@@ -1,6 +1,6 @@
 {
   "name": "yqb-test-suite",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "对react、vue、Node.js项目一键生成测试环境。",
   "main": "./dist/index.js",
   "scripts": {
