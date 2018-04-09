@@ -1,10 +1,8 @@
 import chalk from 'chalk';
 import path from 'path';
 import sh from 'shelljs';
+import copy from 'fancy-copy';
 import { exec } from 'child_process';
-import majo from 'majo';
-import { render } from 'mustache';
-import isBinaryPath from 'is-binary-path';
 import writePkg from 'write-pkg';
 import readPkg from 'read-pkg';
 import Spinner from './util/spinner';
@@ -16,38 +14,22 @@ function checkType(type) {
     };
 }
 
-function absolutePath(p) {
-    if (path.isAbsolute(p)) {
-        return p;
-    }
-    return path.resolve(process.cwd(), p);
+function logFileName(file) {
+    console.log(`    ${chalk.cyan(file)}`);
 }
 
-async function copy(source, dest, vars) {
-    const stream = majo();
-    source = absolutePath(source);
-    dest = absolutePath(dest);
-    return stream
-        .source('**', { baseDir: source })
-        .filter(file => !/\.DS_Store$/.test(file))
-        .use(ctx => {
-            ctx.fileList.forEach(file => {
-                console.log(`    ${chalk.cyan(file)}`);
-                const content = ctx.fileContents(file);
-                if (!isBinaryPath(file)) {
-                    ctx.writeContents(file, render(content, vars));
-                }
-            });
-        })
-        .dest(dest)
-        .catch(console.error);
+function afterTransform(files) {
+    Object.keys(files).forEach(logFileName);
 }
 
 function configJest(type) {
     return copy(
         path.resolve(__dirname, '../template/base/'),
         process.cwd(),
-        checkType(type)
+        checkType(type),
+        {
+            afterTransform
+        }
     );
 }
 
@@ -55,11 +37,17 @@ function copyExamples(type) {
     return copy(
         path.resolve(__dirname, '../template/examples/basic/'),
         path.resolve(process.cwd(), '__tests__/exsamles/'),
-        checkType(type)
+        checkType(type),
+        {
+            afterTransform
+        }
     ).then(() => copy(
         path.resolve(__dirname, `../template/examples/${type}/`),
         path.resolve(process.cwd(), '__tests__/exsamles/'),
-        checkType(type)
+        checkType(type),
+        {
+            afterTransform
+        }
     ));
 }
 
@@ -122,24 +110,31 @@ function addNpmScript() {
 
 export default async function run(type, pkgManager) {
     let spinner = new Spinner('输出Jest配置文件');
-    await configJest(type);
-    spinner.success();
-    console.log();
+    try {
+        await configJest(type);
+        spinner.success();
+        console.log();
 
-    spinner = new Spinner('输出单测示例: __tests__/examples/');
-    await copyExamples(type);
-    spinner.success();
-    console.log();
+        spinner = new Spinner('输出单测示例: __tests__/examples/');
+        await copyExamples(type);
+        spinner.success();
+        console.log();
 
-    spinner = new Spinner('安装依赖');
-    await installDeps(type, pkgManager);
-    spinner.success();
-    console.log();
+        spinner = new Spinner('安装依赖');
+        await installDeps(type, pkgManager);
+        spinner.success();
+        console.log();
 
-    spinner = new Spinner('添加npm命令，修改.gitignore');
-    await addNpmScript();
-    spinner.success();
-    console.log();
+        spinner = new Spinner('添加npm命令，修改.gitignore');
+        await addNpmScript();
+        spinner.success();
+        console.log();
+    }
+    catch (e) {
+        spinner.fail();
+        console.error(e);
+        process.exit(-1);
+    }
 
     console.log();
     console.log(chalk.greenBright.bold('测试环境配置完成，运行') +
