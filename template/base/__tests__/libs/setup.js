@@ -6,8 +6,7 @@ import assert from 'assert';
 {{#react}}import chaiEnzyme from 'chai-enzyme';
 import { shallow, mount, render } from 'enzyme';{{/react}}
 {{#rn}}import chaiEnzyme from 'chai-enzyme';
-import { shallow, mount, render } from 'enzyme';
-import 'react-native-mock/mock';{{/rn}}
+import { shallow, mount, render } from 'enzyme';{{/rn}}
 {{#vue}}import { shallow, mount, renderToString } from '@vue/test-utils';{{/vue}}
 
 chai.use(sinonChai);

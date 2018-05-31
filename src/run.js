@@ -108,30 +108,32 @@ function addNpmScript() {
         });
 }
 
-export default async function run(type, pkgManager) {
-    let spinner = new Spinner('输出Jest配置文件');
+export default async function run(type, pkgManager, onlyExample) {
+    let spinner;
     try {
-        await configJest(type);
-        spinner.success();
-        console.log();
+        if (!onlyExample) {
+            spinner = new Spinner('输出Jest配置文件');
+            await configJest(type);
+            spinner.success();
+            console.log();
 
+            spinner = new Spinner('安装依赖');
+            await installDeps(type, pkgManager);
+            spinner.success();
+            console.log();
+
+            spinner = new Spinner('添加npm命令，修改.gitignore');
+            await addNpmScript();
+            spinner.success();
+            console.log();
+        }
         spinner = new Spinner('输出单测示例: __tests__/examples/');
         await copyExamples(type);
         spinner.success();
         console.log();
-
-        spinner = new Spinner('安装依赖');
-        await installDeps(type, pkgManager);
-        spinner.success();
-        console.log();
-
-        spinner = new Spinner('添加npm命令，修改.gitignore');
-        await addNpmScript();
-        spinner.success();
-        console.log();
     }
     catch (e) {
-        spinner.fail();
+        spinner.error();
         console.error(e);
         process.exit(-1);
     }

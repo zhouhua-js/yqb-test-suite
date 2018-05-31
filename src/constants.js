@@ -8,8 +8,8 @@ export const TYPE = new Enum({
 });
 
 export const DEP = {
-    basic: ['jest', 'babel-jest', 'chai', 'sinon', 'chai-sinon', 'chai-as-promised', 'power-assert', 'babel-preset-power-assert'],
+    basic: ['jest', 'babel-jest', 'chai', 'sinon', 'sinon-chai', 'chai-as-promised', 'power-assert', 'babel-preset-power-assert'],
     vue: ['@vue/test-utils', 'vue-jest'],
-    react: ['enzyme', 'chai-enzyme'],
-    rn: ['enzyme', 'chai-enzyme', 'react-native-mock']
+    react: ['enzyme', 'chai-enzyme@beta'],
+    rn: ['enzyme', 'chai-enzyme']
 };

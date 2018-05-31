@@ -21,6 +21,7 @@ commander
     .usage('[type]')
     // .option('-t, --type [value]', `项目类型，可以为 vue|react|RN|javascript，默认为javascript`, )
     .option('-m, --packageManager <command>', '使用特定的包管理器，默认优先级 yarn > npm')
+    .option('--only-example', '仅更新测试用例的示例')
     .on('--help', () => {
         console.log();
         console.log('  Examples:');
@@ -49,4 +50,4 @@ if (!pkgManeger) {
     pkgManeger = hasYarn ? 'yarn' : 'npm';
 }
 
-run(type, pkgManeger);
+run(type, pkgManeger, commander.onlyExample);

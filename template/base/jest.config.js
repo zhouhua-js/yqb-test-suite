@@ -1,8 +1,9 @@
 module.exports = {
     collectCoverage: true,
+    verbose: true,
     // collectCoverageFrom: ['src/**.{js,jsx,ts,tsx,vue}'],
     coverageDirectory: '<rootDir>/coverage',
-    coveragePathIgnorePatterns: ['/node_modules/', '/__tests__/'],
+    coveragePathIgnorePatterns: ['/node_modules/', '/__tests__/libs/'],
     moduleFileExtensions: ['js', 'jsx', 'json', 'ts', 'tsx'],
     testMatch: ['**/__tests__/**/*.(spec|test).js?(x)', 'src/**/*.(spec|test).js?(x)'],
     moduleNameMapper: {
@@ -10,6 +11,7 @@ module.exports = {
             '<rootDir>/__tests__/lib/fileMock.js',
         '\\.(css|less|styl|scss|sass|sss)$': 'identity-obj-proxy'
     },
+{{#rn}}    preset: "react-native",{{/rn}}
     transform: {
 {{^rn}}        '^.+\\.tsx?$': 'ts-jest',{{/rn}}
 {{#rn}}        '^.+\\.tsx?$': '<rootDir>/__tests__/libs/ts-jest.js',{{/rn}}
