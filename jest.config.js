@@ -1,9 +1,7 @@
 module.exports = {
     collectCoverage: true,
     verbose: true,
-    testEnvironment: 'jsdom',
-    testURL: 'http://localhost/',
-    collectCoverageFrom: ['src/**.{js,jsx,ts,tsx,vue}'],
+    // collectCoverageFrom: ['src/**.{js,jsx,ts,tsx,vue}'],
     coverageDirectory: '<rootDir>/coverage',
     coveragePathIgnorePatterns: ['/node_modules/', '/__tests__/libs/'],
     moduleFileExtensions: ['js', 'jsx', 'json', 'ts', 'tsx'],
@@ -13,11 +11,11 @@ module.exports = {
             '<rootDir>/__tests__/lib/fileMock.js',
         '\\.(css|less|styl|scss|sass|sss)$': 'identity-obj-proxy'
     },
-{{#rn}}    preset: "react-native",{{/rn}}
+
     transform: {
-{{^rn}}        '^.+\\.tsx?$': 'ts-jest',{{/rn}}
-{{#rn}}        '^.+\\.tsx?$': '<rootDir>/__tests__/libs/ts-jest.js',{{/rn}}
-{{#vue}}        '.*\\.vue$': 'vue-jest',{{/vue}}
+        '^.+\\.tsx?$': 'ts-jest',
+
+
         '^.+\\.jsx?$': 'babel-jest'
     },
     setupTestFrameworkScriptFile: '<rootDir>/__tests__/libs/setup.js'

@@ -30,6 +30,22 @@ commander
         console.log('    $ yqb-test-suite react -m npm');
         console.log();
     })
+    .parse(process.argv);commander
+    .version(version, '-v, --version')
+    .name(chalk.bold('yqb-test-suite'))
+    .description(chalk.green('Setup test suite，项目类型可以为 vue|react|RN|javascript，默认为javascript。'))
+    .usage('[type]')
+    // .option('-t, --type [value]', `项目类型，可以为 vue|react|RN|javascript，默认为javascript`, )
+    .option('-m, --packageManager <command>', '使用特定的包管理器，默认优先级 yarn > npm')
+    .option('--only-example', '仅更新测试用例的示例')
+    .on('--help', () => {
+        console.log();
+        console.log('  Examples:');
+        console.log();
+        console.log('    $ yqb-test-suite vue');
+        console.log('    $ yqb-test-suite react -m npm');
+        console.log();
+    })
     .parse(process.argv);
 
 let [type = 'javascript'] = commander.args;

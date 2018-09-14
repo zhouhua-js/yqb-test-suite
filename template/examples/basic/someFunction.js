@@ -5,10 +5,14 @@ export function sum(a, b) {
 export function delay(shouldResolve) {
     return new Promise((resolve, reject) => {
         if (shouldResolve) {
-            resolve('resolve');
+            resolve('done');
         }
         else {
-            reject(new Error('reject'));
+            reject(new Error('fail'));
         }
     });
+}
+
+export function longDelay(finish) {
+    setTimeout(finish, 100000);
 }
